@@ -45,17 +45,17 @@ def generate_message(row_count=ROW_COUNT, group_count=GROUP_COUNT, group_size=GR
 class Root(object):
 
     @cherrypy.expose
-    def index(self):
+    def one_time_pad(self):
         """
         Put all messages into the page
         """
         messages = (generate_message() for _ in range(MESSAGE_COUNT))
-        template = env.get_template('index')
+        template = env.get_template('one_time_pad')
         return template.render(messages=messages)
 
 
 # This is the only page.  Links are shortened to make manual typing easier.
-templates = {'index': '''
+templates = {'one_time_pad': '''
 <title>One Time Pad - Unique, just for you</title>
 <style>
 /* Remove decoration from links so they are readable when printed */
