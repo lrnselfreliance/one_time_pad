@@ -3,12 +3,9 @@
 Generate One Time Pad files, or serve the pads up using a CherryPy server.
 """
 from jinja2 import DictLoader, Environment
-from random import SystemRandom
+import secrets
 import cherrypy
 
-
-# Use more secure SystemRandom
-random = SystemRandom()
 
 # CherryPy config
 CONFIG = {'global': {'server.socket_port': 8080}}
@@ -34,8 +31,7 @@ def generate_row(group_count=GROUP_COUNT, group_size=GROUP_SIZE):
     """
     groups = []
     for _ in range(group_count):
-        # Use random.choices (rather than shuffle) so characters can repeat in each group
-        groups.append(''.join(random.choices(OTP_CHARS, k=group_size)))
+        groups.append(''.join([secrets.choice(OTP_CHARS) for _ in range(group_size)]))
     return ' '.join(groups)
 
 
